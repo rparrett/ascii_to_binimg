@@ -35,8 +35,8 @@ export function generateAsciiBinaryImage(text, options, canvas) {
     for (let charIdx = 0; charIdx < line.length; charIdx += 1) {
       const ch = line[charIdx];
       const code = ch === ' ' ? 0 : ch.charCodeAt(0);
-      if (code > 127) {
-        throw new Error(`Non-ASCII character encountered: ${ch}`);
+      if (code > 255) {
+        throw new Error(`Character outside extended ASCII range (0-255): ${ch} (code: ${code})`);
       }
       const xChar = margin + charIdx * (gridWidth + charSpacing);
 

@@ -338,8 +338,8 @@ export function decodeImageData(imageData, width, height, layoutHint) {
 
   byteRows.forEach((row) => {
     row.forEach((value) => {
-      if (value < 0 || value > 127) {
-        throw new Error('Decoded bytes out of ASCII range');
+      if (value < 0 || value > 255) {
+        throw new Error('Decoded bytes out of extended ASCII range (0-255)');
       }
     });
   });
