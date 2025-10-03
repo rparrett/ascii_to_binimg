@@ -1,5 +1,5 @@
 {
-  "name": "ascii-to-binimg-web",
+  "name": "ascii-to-binimg",
   "version": "1.0.0",
   "description": "Web interface for ASCII to binary image conversion",
   "private": true,
