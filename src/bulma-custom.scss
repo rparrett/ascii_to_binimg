@@ -1,4 +1,9 @@
-// Import everything - easier than debugging what's missing
+// Override primary color with, roughly, Tailwind violet
+@use 'bulma/sass/utilities' with (
+  $primary: hsl(265, 99%, 56%)
+);
+
+// Import Bulma components
 @use 'bulma/sass/base';
 @use 'bulma/sass/themes';
 
