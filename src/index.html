@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ASCII ↔ Binary Image</title>
+  </head>
+  <body>
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+          <h1 class="title">ASCII ↔ Binary Image</h1>
+          <p class="subtitle">
+            Convert text into a highly superior binary image format, and back again.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns is-desktop mt-5">
+          <div class="column">
+            <div class="box">
+              <h2 class="title is-4">Encode Text → PNG</h2>
+
+              <div class="field">
+                <label class="label" for="encode-text">ASCII text</label>
+                <div class="control">
+                  <textarea
+                    class="textarea is-family-monospace"
+                    id="encode-text"
+                    rows="6"
+                    placeholder="Text to be encoded goes here"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div id="encode-options" class="is-hidden mb-4">
+                <div class="columns is-multiline is-mobile">
+                  <div class="column is-one-quarter-desktop is-half-mobile">
+                    <div class="field">
+                      <label class="label">Cell size</label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="number"
+                          id="encode-cell"
+                          value="20"
+                          min="2"
+                          max="200"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column is-one-quarter-desktop is-half-mobile">
+                    <div class="field">
+                      <label class="label">Spacing</label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="number"
+                          id="encode-spacing"
+                          value="16"
+                          min="0"
+                          max="200"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column is-one-quarter-desktop is-half-mobile">
+                    <div class="field">
+                      <label class="label">Margin</label>
+                      <div class="control">
+                        <input
+                          class="input"
+                          type="number"
+                          id="encode-margin"
+                          value="64"
+                          min="0"
+                          max="400"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="column is-one-quarter-desktop is-half-mobile">
+                    <div class="field">
+                      <label class="label">Background</label>
+                      <div class="control">
+                        <button
+                          type="button"
+                          id="encode-bg-trigger"
+                          class="button color-trigger"
+                          aria-label="Choose background color"
+                        ></button>
+                        <input type="hidden" id="encode-bg" value="#c084fc" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <div class="buttons">
+                    <button type="button" id="encode-btn" class="button is-primary">
+                      <span class="icon">
+                        <svg
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M14 17h6m-3 3v-6M4.857 4h4.286c.473 0 .857.384.857.857v4.286a.857.857 0 0 1-.857.857H4.857A.857.857 0 0 1 4 9.143V4.857C4 4.384 4.384 4 4.857 4Zm10 0h4.286c.473 0 .857.384.857.857v4.286a.857.857 0 0 1-.857.857h-4.286A.857.857 0 0 1 14 9.143V4.857c0-.473.384-.857.857-.857Zm-10 10h4.286c.473 0 .857.384.857.857v4.286a.857.857 0 0 1-.857.857H4.857A.857.857 0 0 1 4 19.143v-4.286c0-.473.384-.857.857-.857Z"
+                          />
+                        </svg>
+                      </span>
+                      <span>Render</span>
+                    </button>
+                    <button type="button" id="encode-options-btn" class="button">
+                      Show Options
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <p id="encode-status" class="help"></p>
+
+              <div class="preview mt-4">
+                <canvas id="encode-canvas" width="1" height="1" class="is-hidden"></canvas>
+                <div class="buttons preview-actions">
+                  <button
+                    type="button"
+                    id="encode-download"
+                    class="button is-success is-hidden"
+                    title="Download PNG"
+                    aria-label="Download PNG"
+                  >
+                    <span class="icon">
+                      <svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z"
+                          clip-rule="evenodd"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    <span>Download</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="encode-copy"
+                    class="button is-info is-hidden"
+                    title="Copy to clipboard"
+                    aria-label="Copy to clipboard"
+                  >
+                    <span class="icon">
+                      <svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M18 3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1V9a4 4 0 0 0-4-4h-3a1.99 1.99 0 0 0-1 .267V5a2 2 0 0 1 2-2h7Z"
+                          clip-rule="evenodd"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 7.054V11H4.2a2 2 0 0 1 .281-.432l2.46-2.87A2 2 0 0 1 8 7.054ZM10 7v4a2 2 0 0 1-2 2H4v6a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </span>
+                    <span>Copy</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="column">
+            <div class="box">
+              <h2 class="title is-4">Decode PNG → Text</h2>
+
+              <div class="field">
+                <label class="label">PNG File</label>
+                <div class="file is-boxed">
+                  <label class="file-label" for="decode-input">
+                    <input class="file-input" type="file" id="decode-input" accept="image/png" />
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <svg
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M16 18H8l2.5-6 2 4 1.5-2 2 4Zm-1-8.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"
+                          />
+                          <path
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M10 3v4a1 1 0 0 1-1 1H5m14-4v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1ZM8 18h8l-2-4-1.5 2-2-4L8 18Zm7-8.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"
+                          />
+                        </svg>
+                      </span>
+                      <span class="file-label">Choose or drop a PNG file</span>
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="field">
+                <div class="control">
+                  <textarea
+                    class="textarea"
+                    id="decode-output"
+                    rows="6"
+                    readonly
+                    placeholder="Decoded text will appear here"
+                  ></textarea>
+                </div>
+              </div>
+
+              <p id="decode-status" class="help"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>Built with vanilla JS. No data leaves your browser.</p>
+      </div>
+    </footer>
+  </body>
+</html>

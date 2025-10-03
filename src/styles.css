@@ -1,0 +1,18 @@
+/* Color picker button styling to match Bulma buttons */
+.pcr-button {
+  height: 2.5em !important;
+  min-width: 2.5em !important;
+  border-radius: 0.25em !important;
+}
+
+.pcr-button:before,
+.pcr-button:after {
+  border-radius: 0.25em !important;
+}
+
+canvas {
+  border: 1px solid hsl(0, 0%, 86%);
+  border-radius: 6px;
+  max-width: 100%;
+  background: white;
+}
