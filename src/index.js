@@ -1,5 +1,5 @@
 // Main application entry point
-import 'bulma/css/bulma.min.css';
+import './bulma-custom.scss';
 import './styles.css';
 import {
   elements,
