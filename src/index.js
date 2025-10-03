@@ -1,6 +1,6 @@
 // Main application entry point
 import './bulma-custom.scss';
-import './styles.css';
+import './styles.scss';
 import {
   elements,
   clipboardSupported,

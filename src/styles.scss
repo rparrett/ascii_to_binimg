@@ -1,0 +1,18 @@
+@use 'bulma/sass/utilities/initial-variables' as iv;
+
+canvas {
+  border-radius: iv.$radius;
+  max-width: 100%;
+}
+
+/* Color picker button styling to match Bulma buttons */
+.pcr-button {
+  height: iv.$size-2 !important;
+  min-width: iv.$size-2 !important;
+  border-radius: iv.$radius !important;
+
+  &:before,
+  &:after {
+    border-radius: iv.$radius !important;
+  }
+}

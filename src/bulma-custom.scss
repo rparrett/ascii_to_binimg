@@ -27,8 +27,3 @@
 @use 'bulma/sass/helpers/visibility';
 @use 'bulma/sass/helpers/position';
 @use 'bulma/sass/helpers/typography';
-
-canvas {
-  border-radius: utilities.$radius;
-  max-width: 100%;
-}
