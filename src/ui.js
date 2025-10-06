@@ -16,6 +16,7 @@ export const elements = {
     canvas: document.getElementById('encode-canvas'),
     download: document.getElementById('encode-download'),
     copy: document.getElementById('encode-copy'),
+    share: document.getElementById('encode-share'),
     status: document.getElementById('encode-status'),
     options: document.getElementById('encode-options'),
     optionsBtn: document.getElementById('encode-options-btn'),
@@ -28,6 +29,7 @@ export const elements = {
 };
 
 export const clipboardSupported = Boolean(navigator.clipboard && window.ClipboardItem);
+export const shareSupported = Boolean(navigator.share && navigator.canShare);
 
 export function setElementVisible(element, visible) {
   if (!element) return;

@@ -4,6 +4,7 @@ import './styles.scss';
 import {
   elements,
   clipboardSupported,
+  shareSupported,
   setElementVisible,
   initColorPicker,
   updateTriggerPreview,
@@ -20,6 +21,7 @@ function performRender() {
     lastRenderedUrl = null;
     setElementVisible(elements.encode.download, false);
     setElementVisible(elements.encode.copy, false);
+    setElementVisible(elements.encode.share, false);
     setElementVisible(elements.encode.canvas, false);
     elements.encode.status.textContent = 'Enter some text first.';
     return;
@@ -36,11 +38,17 @@ function performRender() {
       elements.encode.copy.disabled = false;
       elements.encode.copy.removeAttribute('aria-hidden');
     }
+    if (shareSupported) {
+      setElementVisible(elements.encode.share, true);
+      elements.encode.share.disabled = false;
+      elements.encode.share.removeAttribute('aria-hidden');
+    }
   } catch (error) {
     console.error(error);
     lastRenderedUrl = null;
     setElementVisible(elements.encode.download, false);
     setElementVisible(elements.encode.copy, false);
+    setElementVisible(elements.encode.share, false);
     setElementVisible(elements.encode.canvas, false);
     elements.encode.status.textContent = error.message;
   }
@@ -53,6 +61,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setElementVisible(elements.encode.canvas, false);
   setElementVisible(elements.encode.download, false);
   setElementVisible(elements.encode.copy, false);
+  setElementVisible(elements.encode.share, false);
   elements.encode.status.textContent = '';
 
   if (!clipboardSupported) {
@@ -62,6 +71,15 @@ window.addEventListener('DOMContentLoaded', () => {
   } else {
     elements.encode.copy.title = 'Copy PNG to clipboard';
     elements.encode.copy.disabled = false;
+  }
+
+  if (!shareSupported) {
+    elements.encode.share.title = 'Share requires Share API support and mobile device';
+    elements.encode.share.disabled = true;
+    elements.encode.share.setAttribute('aria-hidden', 'true');
+  } else {
+    elements.encode.share.title = 'Share image';
+    elements.encode.share.disabled = false;
   }
 });
 
@@ -79,6 +97,7 @@ elements.encode.text.addEventListener('input', () => {
     lastRenderedUrl = null;
     setElementVisible(elements.encode.download, false);
     setElementVisible(elements.encode.copy, false);
+    setElementVisible(elements.encode.share, false);
     setElementVisible(elements.encode.canvas, false);
     elements.encode.status.textContent = '';
   }
@@ -107,6 +126,30 @@ elements.encode.copy.addEventListener('click', async () => {
     });
     if (!blob) throw new Error('Failed to copy image');
     await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+elements.encode.share.addEventListener('click', async () => {
+  if (!shareSupported) {
+    return;
+  }
+  if (!lastRenderedUrl) {
+    return;
+  }
+  try {
+    const blob = await new Promise((resolve) => {
+      elements.encode.canvas.toBlob((b) => resolve(b), 'image/png');
+    });
+    if (!blob) throw new Error('Failed to share image');
+
+    const file = new File([blob], 'ascii_image.png', { type: 'image/png' });
+
+    await navigator.share({
+      title: 'ASCII Binary Image',
+      files: [file],
+    });
   } catch (error) {
     console.error(error);
   }
