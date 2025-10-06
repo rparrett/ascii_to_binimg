@@ -17,17 +17,14 @@ module.exports = (env, argv) => {
       rules: [
         {
           test: /\.css$/i,
-          use: [
-            isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
-            'css-loader'
-          ],
+          use: [isProduction ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
         },
         {
           test: /\.scss$/i,
           use: [
             isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
             'css-loader',
-            'sass-loader'
+            'sass-loader',
           ],
         },
       ],
@@ -43,16 +40,19 @@ module.exports = (env, argv) => {
           { from: 'src/apple-touch-icon.png', to: 'apple-touch-icon.png' },
         ],
       }),
-      ...(isProduction ? [
-        new MiniCssExtractPlugin({
-          filename: 'styles.[contenthash].css',
-        })
-      ] : []),
+      ...(isProduction
+        ? [
+            new MiniCssExtractPlugin({
+              filename: 'styles.[contenthash].css',
+            }),
+          ]
+        : []),
     ],
     devServer: {
       static: './dist',
       hot: true,
       open: true,
+      allowedHosts: 'all',
     },
     optimization: {
       splitChunks: {
